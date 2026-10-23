@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trading Sessions · PKT</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#0f1218"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Sessions">
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#14181f;--mut:#667085;--bd:#e3e6eb;--a:#e39b1f;--u:#3b82d9;--n:#22a066;--s:#d9468f;--ov:rgba(120,80,220,.16);--ovb:#7c5cdc;--now:#e5383b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1218;--card:#181c25;--tx:#eef1f6;--mut:#8b94a7;--bd:#272d3a;--ov:rgba(150,120,255,.2);--ovb:#9a82ff}}
+:root[data-theme="dark"]{--bg:#0f1218;--card:#181c25;--tx:#eef1f6;--mut:#8b94a7;--bd:#272d3a;--ov:rgba(150,120,255,.2);--ovb:#9a82ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 -apple-system,system-ui,Segoe UI,Roboto,sans-serif;padding:14px}
+.w{max-width:760px;margin:0 auto}
+h1{font-size:16px;margin:0 0 2px}.sub{color:var(--mut);font-size:12px;margin-bottom:12px}
+.clock{font-size:34px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:12px}
+.sum div{margin-top:6px;font-size:14px}.sum b{font-weight:650}
+.tlc{padding:0;overflow:hidden}
+.tlh{display:flex;justify-content:space-between;align-items:center;padding:10px 12px 0;font-size:12px;color:var(--mut)}
+.tlh .bt{display:flex;gap:6px}.tlh button{font:inherit;font-weight:700;color:var(--tx);background:var(--bd);border:0;border-radius:99px;min-width:34px;padding:5px 12px}.tlh #nb{color:#fff;background:var(--now)}
+.lg{display:flex;flex-wrap:wrap;gap:4px 14px;padding:2px 12px 10px;font-size:11px;color:var(--mut)}.lg i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.tlw{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x;padding-bottom:4px}
+.tl{position:relative;height:234px;overflow:hidden}
+.seg{position:absolute;height:28px;border-radius:7px;color:#fff;font-size:11.5px;font-weight:600;display:flex;align-items:center;padding-left:8px;white-space:nowrap;overflow:hidden}
+.ovs{position:absolute;top:26px;bottom:22px;background:var(--ov);border-left:1.5px dashed var(--ovb);border-right:1.5px dashed var(--ovb)}
+.ovl{position:absolute;top:184px;height:24px;border-radius:7px;background:var(--ovb);color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap}
+.ax{position:absolute;left:0;right:0;bottom:0;height:22px;border-top:1px solid var(--bd)}
+.tk{position:absolute;top:0;width:1px;height:5px;background:var(--mut)}
+.tk.m{height:9px}.tl-l{position:absolute;top:10px;transform:translateX(-50%);font-size:10px;color:var(--mut);white-space:nowrap}
+.tl-l.d{font-weight:700;color:var(--tx)}
+.md{position:absolute;top:0;bottom:22px;border-left:1px solid var(--mut);opacity:.5}
+.lb{position:absolute;top:0;bottom:22px;border-left:1px dotted var(--mut)}
+.lbt{position:absolute;top:6px;left:4px;font-size:9.5px;color:var(--mut);white-space:nowrap}
+.now{position:absolute;top:0;bottom:0;width:2px;background:var(--now);z-index:5}
+.now span{position:absolute;top:2px;left:50%;transform:translateX(-50%);background:var(--now);color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:6px;white-space:nowrap}
+.sc{display:flex;align-items:center;gap:8px;margin-bottom:8px}.dot{width:10px;height:10px;border-radius:50%}
+.sc h2{font-size:15px;margin:0}.bd{margin-left:auto;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--bd);color:var(--mut)}
+.bd.on{background:#1f9d5c;color:#fff}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:13px}.g .k{color:var(--mut);font-size:11px}
+.big{font-variant-numeric:tabular-nums;font-weight:650}
+.pb{grid-column:1/-1;height:6px;border-radius:9px;background:var(--bd);overflow:hidden}.pb i{display:block;height:100%}
+.foot{color:var(--mut);font-size:11px;text-align:center;margin:6px 0 10px}
+</style></head><body><div class="w">
+<h1>Trading Sessions</h1><div class="sub">All times in PKT (UTC+5) unless stated</div>
+<div class="card"><div class="clock" id="clk">--:--:--</div><div class="sub" id="dt"></div>
+<div class="sum" id="sum"></div></div>
+<div class="card tlc"><div class="tlh"><span>Pinch or +/− to zoom</span><div class="bt"><button id="zo">−</button><button id="zi">+</button><button id="fb">Fit</button><button id="nb">Now</button></div></div>
+<div class="tlw" id="wrap"><div class="tl" id="tl"></div></div><div class="lg"><span><i style="background:var(--s)"></i>Sydney 3 AM–12 PM</span><span><i style="background:var(--a)"></i>Asia 5 AM–2 PM</span><span><i style="background:var(--u)"></i>UK 1–9 PM</span><span><i style="background:var(--n)"></i>New York 6 PM–2 AM</span><span><i style="background:var(--ovb)"></i>Overlaps: Sydney+Asia 5 AM–12 PM · Asia+UK 1–2 PM · UK+NY 6–9 PM</span></div></div>
+<div class="card" id="cd"><div class="sc"><span class="dot" style="background:var(--tx)"></span><h2>Daily Candle <span style="font-weight:400;color:var(--mut)">· 00:00 UTC open</span></h2><span class="bd on" id="cb">OPEN</span></div><div class="g" id="cg"></div></div>
+<div id="cards"></div>
+<div class="foot">Session hours are fixed in PKT as defined. Daily candle opens 00:00 UTC = 05:00 PKT.</div>
+</div>
+<script>
+const S=[{n:'Sydney',c:'Sydney',tz:'Australia/Sydney',s:180,d:540,col:'var(--s)',r:0},
+{n:'Asia',c:'Tokyo',tz:'Asia/Tokyo',s:300,d:540,col:'var(--a)',r:1},
+{n:'UK',c:'London',tz:'Europe/London',s:780,d:480,col:'var(--u)',r:2},
+{n:'New York',c:'New York',tz:'America/New_York',s:1080,d:480,col:'var(--n)',r:3}];
+const O=[{n:'Sydney + Asia',s:300,e:720},{n:'Asia + UK',s:780,e:840},{n:'UK + New York',s:1080,e:1260}];
+let PX=15,DS=0;const wrap=document.getElementById('wrap'),tl=document.getElementById('tl');let ORG=0;
+function p12(m){m=((m%1440)+1440)%1440;let h=Math.floor(m/60),mi=m%60,a=h>=12?'PM':'AM';h=h%12||12;return h+':'+String(mi).padStart(2,'0')+' '+a}
+function hms(s){s=Math.max(0,Math.floor(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+'h ':'')+String(m).padStart(h?2:1,'0')+'m '+String(x).padStart(2,'0')+'s'}
+function loc(ts,tz){return new Intl.DateTimeFormat('en-US',{timeZone:tz,weekday:'short',hour:'numeric',minute:'2-digit'}).format(new Date(ts))}
+function locT(ts,tz){return new Intl.DateTimeFormat('en-US',{timeZone:tz,hour:'numeric',minute:'2-digit',second:'2-digit'}).format(new Date(ts))}
+const X=m=>m/60*PX;
+function build(ds){
+ ORG=ds-864e5;DS=ds;let h='';
+ for(let k=-1;k<=2;k++)for(const o of O)h+=`<div class="ovs" style="left:${X(k*1440+o.s)}px;width:${X(o.e-o.s)}px"></div>`;
+ for(let k=-1;k<=2;k++)for(const s of S)h+=`<div class="seg" style="left:${X(k*1440+s.s)}px;width:${X(s.d)}px;top:${30+s.r*38}px;background:${s.col}">${s.n===s.c?s.n:s.n+' · '+s.c}</div>`;
+ for(let k=-1;k<=2;k++)for(const o of O)h+=`<div class="ovl" style="left:${X(k*1440+o.s)}px;width:${X(o.e-o.s)}px">${X(o.e-o.s)>=56?o.n:''}</div>`;
+ for(let k=0;k<3;k++){if(k)h+=`<div class="md" style="left:${X(k*1440)}px"></div>`;h+=`<div class="lb" style="left:${X(k*1440+300)}px"><span class="lbt">Daily candle</span></div>`}
+ h+='<div class="ax">';
+ const df=new Intl.DateTimeFormat('en-US',{timeZone:'UTC',weekday:'short',day:'numeric',month:'short'});
+ const df2=new Intl.DateTimeFormat('en-US',{timeZone:'UTC',day:'numeric',month:'short'});
+ for(let i=0;i<=72;i++){const m3=i%3===0;h+=`<div class="tk${m3?' m':''}" style="left:${i*PX}px"></div>`;
+  if(m3&&i<72){const hh=(i%24)%12||12,mid=i%24===0;
+   h+=`<div class="tl-l${mid?' d':''}" style="left:${i===0?28:i*PX}px">${mid?(PX<30?df2:df).format(new Date(ORG+18e6+i*36e5)):hh+((i%24)<12?'a':'p')}</div>`}}
+ h+='</div><div class="now" id="now"><span id="nl"></span></div>';
+ tl.style.width=72*PX+'px';tl.innerHTML=h;
+}
+function center(now,smooth){wrap.scrollTo({left:(now-ORG)/36e5*PX-wrap.clientWidth/2,behavior:smooth?'smooth':'auto'})}
+const fitPX=()=>(wrap.clientWidth||360)/24;
+function setZoom(np,ax){np=Math.min(200,Math.max((wrap.clientWidth||360)/48,np));const t=(wrap.scrollLeft+ax)/PX;PX=np;build(DS);wrap.scrollLeft=t*PX-ax;place()}
+function fit(){PX=fitPX();build(DS);wrap.scrollLeft=24*PX;place()}
+function place(){const n=Date.now(),e=document.getElementById('now');if(e)e.style.left=((n-ORG)/36e5*PX-1)+'px';const l=document.getElementById('nl');if(l){const p=new Date(n+18e6);l.textContent=p12(p.getUTCHours()*60+p.getUTCMinutes())}}
+const mid=()=>wrap.clientWidth/2;
+document.getElementById('nb').onclick=()=>center(Date.now(),true);
+document.getElementById('fb').onclick=fit;
+document.getElementById('zi').onclick=()=>setZoom(PX*1.5,mid());
+document.getElementById('zo').onclick=()=>setZoom(PX/1.5,mid());
+let pd=0,p0=0;const dist=e=>Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+wrap.addEventListener('touchstart',e=>{if(e.touches.length===2){pd=dist(e);p0=PX}},{passive:true});
+wrap.addEventListener('touchmove',e=>{if(e.touches.length===2&&pd){e.preventDefault();const r=wrap.getBoundingClientRect();setZoom(p0*dist(e)/pd,(e.touches[0].clientX+e.touches[1].clientX)/2-r.left)}},{passive:false});
+wrap.addEventListener('touchend',e=>{if(e.touches.length<2)pd=0});
+wrap.addEventListener('wheel',e=>{if(e.ctrlKey){e.preventDefault();setZoom(PX*(e.deltaY<0?1.15:1/1.15),e.clientX-wrap.getBoundingClientRect().left)}},{passive:false});
+const cards=document.getElementById('cards');
+cards.innerHTML=S.map((s,i)=>`<div class="card"><div class="sc"><span class="dot" style="background:${s.col}"></span><h2>${s.n} <span style="font-weight:400;color:var(--mut)">· ${s.c}</span></h2><span class="bd" id="b${i}"></span></div><div class="g" id="g${i}"></div></div>`).join('');
+function tick(){
+ const now=Date.now(),p=new Date(now+18e6),sec=p.getUTCHours()*3600+p.getUTCMinutes()*60+p.getUTCSeconds(),m=sec/60;
+ const ds=Math.floor((now+18e6)/864e5)*864e5-18e6;
+ if(ORG!==ds-864e5){if(!ORG){PX=fitPX();build(ds);wrap.scrollLeft=24*PX}else{const t=wrap.scrollLeft;build(ds);wrap.scrollLeft=t-24*PX}}
+ const hh=p.getUTCHours(),mm=String(p.getUTCMinutes()).padStart(2,'0'),ss=String(p.getUTCSeconds()).padStart(2,'0');
+ document.getElementById('clk').textContent=String(hh).padStart(2,'0')+':'+mm+':'+ss+' PKT';
+ document.getElementById('dt').textContent=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Karachi',weekday:'long',day:'numeric',month:'short',year:'numeric'}).format(new Date(now))+' · UTC '+new Intl.DateTimeFormat('en-GB',{timeZone:'UTC',hour:'2-digit',minute:'2-digit'}).format(new Date(now));
+ place();
+ const act=[],nxt=[];
+ S.forEach((s,i)=>{const el=((sec-s.s*60)%86400+86400)%86400,D=s.d*60,on=el<D;
+  const rem=D-el,opens=86400-el,ev=on?now+rem*1000:now+opens*1000;
+  const st=((s.s+s.d)%1440);
+  if(on)act.push({s,rem,el});nxt.push({s,opens,on});
+  const b=document.getElementById('b'+i);b.textContent=on?'LIVE':'CLOSED';b.className='bd'+(on?' on':'');
+  document.getElementById('g'+i).innerHTML=
+  `<div class="pb"><i style="width:${on?(el/D*100).toFixed(1):0}%;background:${s.col}"></i></div><div><div class="k">${on?'Closes in':'Opens in'}</div><div class="big">${hms(on?rem:opens)}</div></div><div><div class="k">${on?'Elapsed':'Closed since'}</div><div class="big">${hms(on?el:el-D)}${on?' <span style="color:var(--mut);font-weight:400;font-size:11px">('+(el/D*100).toFixed(0)+'%)</span>':''}</div></div>
+   <div><div class="k">${s.c} time now</div><div class="big">${locT(now,s.tz)}</div></div>
+   <div><div class="k">Session (PKT)</div><div>${p12(s.s)} – ${p12(st)}</div></div>
+   <div><div class="k">${on?'Closes':'Opens'} at</div><div>${p12(on?st:s.s)} PKT<br><span style="color:var(--mut)">${loc(ev,s.tz)} ${s.c}</span></div></div>`;});
+ {const el=((sec-18000)%86400+86400)%86400,rem=86400-el;
+  document.getElementById('cg').innerHTML=`<div class="pb"><i style="width:${(el/864).toFixed(1)}%;background:var(--tx)"></i></div><div><div class="k">Time remaining</div><div class="big">${hms(rem)}</div></div><div><div class="k">Elapsed</div><div class="big">${hms(el)} <span style="color:var(--mut);font-weight:400;font-size:11px">(${(el/864).toFixed(0)}%)</span></div></div><div><div class="k">Candle opened</div><div>${loc(now-el*1000,'Asia/Karachi')} PKT<br><span style="color:var(--mut)">00:00 UTC</span></div></div><div><div class="k">Closes / next opens</div><div>${loc(now+rem*1000,'Asia/Karachi')} PKT<br><span style="color:var(--mut)">00:00 UTC</span></div></div>`}
+ const cur=O.find(o=>m>=o.s&&m<o.e);
+ const no=O.map(o=>({o,w:((o.s*60-sec)%86400+86400)%86400})).sort((a,b)=>a.w-b.w)[0];
+ const nx=nxt.filter(x=>!x.on).sort((a,b)=>a.opens-b.opens)[0];
+ let t=`<div><b>Now:</b> ${act.length?act.map(a=>a.s.n+' ('+hms(a.el)+' elapsed, '+hms(a.rem)+' left)').join(' + '):'No major session live'}${cur?' <span style="color:var(--ovb)">· overlap: '+cur.n+'</span>':''}</div>`;
+ if(cur)t+=`<div><b>Overlap ends in</b> ${hms(cur.e*60-sec)}</div>`;
+ else t+=`<div><b>Next overlap:</b> ${no.o.n} at ${p12(no.o.s)} PKT, in ${hms(no.w)}</div>`;
+ if(nx)t+=`<div><b>Next open:</b> ${nx.s.n} at ${p12(nx.s.s)} PKT (${loc(now+nx.opens*1000,nx.s.tz)} ${nx.s.c}), in ${hms(nx.opens)}</div>`;
+ document.getElementById('sum').innerHTML=t;
+}
+tick();setInterval(tick,1000);
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script></body></html>
